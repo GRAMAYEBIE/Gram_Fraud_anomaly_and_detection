@@ -13,11 +13,11 @@ st.set_page_config(page_title="FraudX AI - Production System", layout="wide", pa
 @st.cache_resource
 def load_fraud_assets():
     # Model and Scaler are loaded once and cached for performance
-    model = joblib.load('fraudx_model_final.pkl')
-    scaler = joblib.load('scaler_fraud.pkl')
+    model = joblib.load('Desktop/stat_app/fraudx_model_final.pkl')
+    scaler = joblib.load('Desktop/stat_app/scaler_fraud.pkl')
     # Assets for Page 2
-    iso_forest = joblib.load('iso_forest_model.pkl')
-    kmeans = joblib.load('kmeans_clusterer.pkl')
+    iso_forest = joblib.load('Desktop/stat_app/iso_forest_model.pkl')
+    kmeans = joblib.load('Desktop/stat_app/kmeans_clusterer.pkl')
     return model, scaler, iso_forest, kmeans
 
 try:
