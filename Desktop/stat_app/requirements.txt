@@ -1,0 +1,24 @@
+# Data Manipulation & Math
+pandas
+numpy
+statsmodels
+
+# Machine Learning & Scaling
+scikit-learn
+xgboost
+imbalanced-learn
+shap
+lime
+
+# Model Persistence
+joblib
+
+# Web Interface
+streamlit
+
+# Visualization 
+matplotlib
+seaborn
+plotly
+nbformat
+ipykernel
