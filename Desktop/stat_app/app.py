@@ -129,7 +129,7 @@ else:
         score_brut = iso_forest.decision_function(features)[0]
         
         # Apply strict threshold 0.16
-        if score_brut < 0.25:
+        if score_brut < 0.16:
             is_anomaly = -1
         else:
             is_anomaly = 1
