@@ -24,4 +24,3 @@ nbformat
 ipykernel
 shap
 lime
-lime.lime_tabular
