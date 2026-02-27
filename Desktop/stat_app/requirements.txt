@@ -14,7 +14,7 @@ lime
 joblib
 
 # Web Interface
-streamlit
+streamlit>=1.35.0
 
 # Visualization 
 matplotlib
@@ -24,3 +24,4 @@ nbformat
 ipykernel
 shap
 lime
+altair>=5.0.0
