@@ -14,7 +14,7 @@ lime
 joblib
 
 # Web Interface
-streamlit>=1.31.0
+streamlit
 
 # Visualization 
 matplotlib
@@ -22,4 +22,6 @@ seaborn
 plotly
 nbformat
 ipykernel
-altair<5
+shap
+lime
+lime.lime_tabular
