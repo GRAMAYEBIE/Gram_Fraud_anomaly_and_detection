@@ -5,6 +5,10 @@ import numpy as np
 import time
 import os
 import plotly.graph_objects as go # For radar chart on Page 2
+import matplotlib.pyplot as plt
+import shap
+import lime
+import lime.lime_tabular
 
 # --- 1. PAGE CONFIGURATION ---
 st.set_page_config(page_title="FraudX AI - Production System", layout="wide", page_icon="🛡️")
@@ -13,11 +17,11 @@ st.set_page_config(page_title="FraudX AI - Production System", layout="wide", pa
 @st.cache_resource
 def load_fraud_assets():
     # Model and Scaler are loaded once and cached for performance
-    model = joblib.load('Desktop/stat_app/fraudx_model_final.pkl')
-    scaler = joblib.load('Desktop/stat_app/scaler_fraud.pkl')
+    model = joblib.load('fraudx_model_final.pkl')
+    scaler = joblib.load('scaler_fraud.pkl')
     # Assets for Page 2
-    iso_forest = joblib.load('Desktop/stat_app/iso_forest_model.pkl')
-    kmeans = joblib.load('Desktop/stat_app/kmeans_clusterer.pkl')
+    iso_forest = joblib.load('iso_forest_model.pkl')
+    kmeans = joblib.load('kmeans_clusterer.pkl')
     return model, scaler, iso_forest, kmeans
 
 try:
@@ -77,7 +81,7 @@ if page == "🛡️ Supervised Model (Base)":
         Based on the **SHAP (SHapley Additive exPlanations)** global importance plot, variables like **V14, V17, and V12** are the primary drivers 
         of the model's decisions. By exposing these 6 components, we capture approximately **85% of the model's predictive logic**.
         """)
-
+    
     if st.sidebar.button("Run AI Analysis"):
         with st.spinner('Processing multi-dimensional scoring...'):
             prediction = model.predict(features)[0]
@@ -116,6 +120,48 @@ if page == "🛡️ Supervised Model (Base)":
         with res_col2:
             st.write("**Model Intelligence:**")
             st.info(f"The XGBoost model analyzed 30 dimensions. Primary drivers for this score were V14, V4, and V17. Simulated amount: ${amount:,.2f}.")
+
+# --- NEW: EXPLAINABILITY SECTION (SHAP & LIME) ---
+        st.divider()
+        st.subheader("🧪 Explainability Suite (XAI)")
+        
+        tab1, tab2 = st.tabs(["📊 SHAP Explanation", "📉 LIME Local Diagnostic"])
+        
+        with tab1:
+            st.write("**Local Contribution (SHAP Force Plot)**")
+            # Explainer needs to be initialized (ideally with a sample of your training data)
+            # For the demo, we use the model's base values
+            explainer = shap.TreeExplainer(model)
+            shap_values = explainer.shap_values(features)
+            
+            # Generating the Force Plot
+            fig_shap, ax_shap = plt.subplots(figsize=(10, 2))
+            shap.force_plot(
+                explainer.expected_value, 
+                shap_values[0], 
+                features, 
+                feature_names=[f"V{i+1}" for i in range(28)] + ["Time", "Amount"],
+                matplotlib=True,
+                show=False
+            )
+            st.pyplot(plt.gcf())
+            st.info("💡 Red bars push the risk HIGHER, blue bars push it LOWER.")
+
+        with tab2:
+            st.write("**Feature Importance (LIME)**")
+            # For LIME, we simulate the training background if not loaded
+            # You can also use a pre-saved lime_explainer.pkl if you have one
+            explainer_lime = lime.lime_tabular.LimeTabularExplainer(
+                training_data=np.random.normal(0, 1, (100, 30)), # Replace with a sample of X_train for better accuracy
+                feature_names=[f"V{i+1}" for i in range(28)] + ["Time", "Amount"],
+                class_names=['Legit', 'Fraud'],
+                mode='classification'
+            )
+            exp = explainer_lime.explain_instance(features[0], model.predict_proba, num_features=6)
+            
+            # Displaying LIME as a plot
+            fig_lime = exp.as_pyplot_figure()
+            st.pyplot(fig_lime)
 
 # =========================================================
 # PAGE 2 : GENIUS ENGINE (ISOLATION FOREST + SMART DIAGNOSTIC)
