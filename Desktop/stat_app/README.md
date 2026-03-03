@@ -68,6 +68,10 @@ Launch the Dashboard:
 
 #### Simulate Transactions: Use the sidebar sliders to input data and click "Run AI Analysis".
 
+### The monitoring dashoborad 
+
+- stremalit run monitoring_app.py
+
 #### Trigger Retraining: Once new data is collected, update the model by running:
 
 ### Bash
