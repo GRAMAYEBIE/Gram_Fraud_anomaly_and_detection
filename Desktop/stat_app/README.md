@@ -66,11 +66,15 @@ Launch the Dashboard:
 
 - streamlit run app.py
 
+-open the app in  https://gramfraudanomalyanddetection-4qfvtrqibkebewpjrqrnyd.streamlit.app/
+
 #### Simulate Transactions: Use the sidebar sliders to input data and click "Run AI Analysis".
 
 ### The monitoring dashoborad 
 
 - stremalit run monitoring_app.py
+
+- open in https://gramfraudmonitoring-clrpe2u2qt63afhfjynkmw.streamlit.app/
 
 #### Trigger Retraining: Once new data is collected, update the model by running:
 
