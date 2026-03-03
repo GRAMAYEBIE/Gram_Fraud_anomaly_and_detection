@@ -4,7 +4,7 @@
 
 ### FraudX AI is a high-performance, production-ready fraud detection solution. Moving beyond simple classification, it implements a Hybrid Multi-Model Architecture to identify known fraud patterns while simultaneously detecting and profiling unseen anomalies.
 
-### The system architecture follows a "Box-to-Box" approach, bridgings the gap between Real-Time Inference (Streamlit), Behavioral Diagnostics (Clustering), and Automated MLOps (Retraining Pipeline).
+### The system architecture follows a "Box-to-Box" approach, bridgings the gap between Real-Time Inference (Streamlit), Behavioral Diagnostics (Clustering), Monitoring and Automated MLOps (Retraining Pipeline).
 
 
 
